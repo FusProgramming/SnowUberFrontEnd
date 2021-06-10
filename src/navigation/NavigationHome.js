@@ -14,6 +14,9 @@ import {withStyles} from "@material-ui/core";
 import SnowLogo from "../assets/SnowLogo.png";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import Divider from "@material-ui/core/Divider";
+import SettingsIcon from '@material-ui/icons/Settings';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 function NavigationHome() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -68,9 +71,20 @@ function NavigationHome() {
                                       open={Boolean(anchorEl)}
                                       aria-haspopup="true"
                                       onClose={handleClose}>
-                                    <MenuItem onClick={handleClose}> Profile </MenuItem>
-                                    <MenuItem onClick={handleClose}> Settings </MenuItem>
-                                    <MenuItem onClick={handleClose}> Logout </MenuItem>
+                                    <MenuItem onClick={handleClose}>
+                                        <AccountCircle style={{ marginRight: '1rem'}} />
+                                        Profile
+                                    </MenuItem>
+                                    <Divider/>
+                                    <MenuItem onClick={handleClose}>
+                                        <SettingsIcon style={{ marginRight: '1rem'}} />
+                                         Settings
+                                    </MenuItem>
+                                    <Divider/>
+                                    <MenuItem onClick={handleClose}>
+                                        <ExitToAppIcon style={{ marginRight: '1rem'}} />
+                                        Logout
+                                    </MenuItem>
                                 </Menu>
                             </IconButton>
                         </div>
