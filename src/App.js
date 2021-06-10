@@ -13,17 +13,11 @@ import {
   Route,
 } from "react-router-dom";
 
-
-
-
-class App extends React.Component {
-
-  render() {
+function App() {
     return (
         <Router>
           <div>
             <Switch>
-
               <Route path="/UserHomePage">
                 <UserHomePage/>
               </Route>
@@ -44,7 +38,6 @@ class App extends React.Component {
           </div>
         </Router>
     );
-  }
 }
 
 export default App;
