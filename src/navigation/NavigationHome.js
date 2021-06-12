@@ -17,8 +17,10 @@ import TextField from "@material-ui/core/TextField";
 import Divider from "@material-ui/core/Divider";
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { useHistory } from "react-router-dom";
 
 function NavigationHome() {
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleOpen = (event) => {
@@ -27,6 +29,15 @@ function NavigationHome() {
 
     const handleClose = () => {
         setAnchorEl(false);
+    };
+
+
+    const handleLogin = () => {
+        history.push('/LoginPage')
+    };
+
+    const handleRegister = () => {
+        history.push('/RegistrationPage')
     };
 
     return (
@@ -45,48 +56,12 @@ function NavigationHome() {
                             </div>
                         </div>
                         <div style={{ marginLeft: 'auto'}}>
-
-                            <IconButton style={{color: '#03e3fc'}}>
-                                <Badge>
-                                <MailIcon style={{color: '#03e3fc'}}/>
-                                </Badge>
-                            </IconButton>
-                            <IconButton style={{color: '#03e3fc'}}>
-                                <Badge>
-                                    <NotificationsIcon style={{color: '#03e3fc'}}/>
-                                </Badge>
-                            </IconButton>
-                            <IconButton style={{color: '#03e3fc'}}>
-                                <AccountCircle  style={{color: '#03e3fc'}}
-                                                aria-controls="customized-menu"
-                                                aria-haspopup="true"
-                                                variant="contained"
-                                                onClick={handleOpen}>
-                                </AccountCircle>
-                                <Menu style={{ marginTop: '3rem', color: '#121212'}}
-                                      aria-controls="customized-menu"
-                                      id="login-menu"
-                                      anchorEl={anchorEl}
-                                      keepMounted
-                                      open={Boolean(anchorEl)}
-                                      aria-haspopup="true"
-                                      onClose={handleClose}>
-                                    <MenuItem onClick={handleClose}>
-                                        <AccountCircle style={{ marginRight: '1rem'}} />
-                                        Profile
-                                    </MenuItem>
-                                    <Divider/>
-                                    <MenuItem onClick={handleClose}>
-                                        <SettingsIcon style={{ marginRight: '1rem'}} />
-                                         Settings
-                                    </MenuItem>
-                                    <Divider/>
-                                    <MenuItem onClick={handleClose}>
-                                        <ExitToAppIcon style={{ marginRight: '1rem'}} />
-                                        Logout
-                                    </MenuItem>
-                                </Menu>
-                            </IconButton>
+                            <Button style={{color: 'white'}} onClick={handleLogin}>
+                                Login
+                            </Button>
+                            <Button style={{color: 'white'}} onClick={handleRegister}>
+                                Register
+                            </Button>
                         </div>
                     </Toolbar>
                 </AppBar>

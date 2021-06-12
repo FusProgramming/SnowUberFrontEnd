@@ -12,28 +12,42 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import NavigationUserHome from "./navigation/NavigationUserHome";
+import UserMessagesPage from "./pages/UserMessagesPage";
+import UserNotificationPage from "./pages/UserNotificationPage";
+import SettingsPage from "./pages/SettingsPage";
 
 function App() {
     return (
         <Router>
           <div>
             <Switch>
-              <Route path="/UserHomePage">
-                <UserHomePage/>
-              </Route>
-              <Route path="/RegistrationPage">
-                <RegistrationPage/>
-              </Route>
-              <Route path="/ForgotPasswordPage">
-                <ForgotPasswordPage/>
-              </Route>
-              <Route path="/LoginPage">
-                <LoginPage/>
-              </Route>
-              <Route path="/">
-                <NavigationHome/>
-                <HomePage/>
-              </Route>
+                <Route path="/SettingsPage">
+                    <SettingsPage/>
+                </Route>
+                <Route path="/UserNotificationPage">
+                    <UserNotificationPage/>
+                </Route>
+                <Route path="/UserMessagesPage">
+                    <UserMessagesPage/>
+                </Route>
+                <Route path="/UserHomePage">
+                    <NavigationUserHome/>
+                    <UserHomePage/>
+                </Route>
+                <Route path="/RegistrationPage">
+                    <RegistrationPage/>
+                </Route>
+                <Route path="/ForgotPasswordPage">
+                    <ForgotPasswordPage/>
+                </Route>
+                <Route path="/LoginPage">
+                    <LoginPage/>
+                </Route>
+                <Route path="/">
+                    <NavigationHome/>
+                    <HomePage/>
+                </Route>
             </Switch>
           </div>
         </Router>

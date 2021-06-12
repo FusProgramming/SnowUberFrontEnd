@@ -1,13 +1,8 @@
 import React from 'react';
 import withRouter from "react-router-dom/es/withRouter";
 
-class ForgotPasswordPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+function ForgotPasswordPage() {
 
-    render() {
         return (
             <div>
                 <h1>
@@ -15,6 +10,6 @@ class ForgotPasswordPage extends React.Component {
                 </h1>
             </div>
         );
-    }
+
 }
 export default withRouter(ForgotPasswordPage);

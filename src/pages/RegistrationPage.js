@@ -42,6 +42,11 @@ class RegistrationPage extends React.Component {
 
     }
 
+    handleUserHome = () => {
+        const { history } = this.props;
+        history.push('/UserHomePage')
+    };
+
     async componentDidMount() {
         // Load all of the users as soon as this component mounts
         await this.loadUsers()
@@ -180,13 +185,13 @@ class RegistrationPage extends React.Component {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                onClick={this.handleUserSubmit}
+                                onClick={this.handleUserHome}
                             >
                                 Sign Up
                             </Button>
                             <Grid container justify="flex-end">
                                 <Grid item>
-                                    <Link href="#" variant="body2">
+                                    <Link href="/LoginPage" variant="body2">
                                         Already have an account? Sign in
                                     </Link>
                                 </Grid>
