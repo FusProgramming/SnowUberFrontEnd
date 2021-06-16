@@ -48,7 +48,7 @@ function NavigationHome() {
         {
             text: "Messages",
             icon: <MailIcon/>,
-            onClick: () => handleUserMessagePage(),
+            onClick: () => handleContractorMessagePage(),
         },
         {
             text: "Plow Home",
@@ -58,7 +58,7 @@ function NavigationHome() {
         {
             text: "Transactions",
             icon: <ShopIcon/>,
-            onClick: () => handleTransactionsPage(),
+            onClick: () => handleContractorTransactionPage(),
         }
     ];
 
@@ -71,15 +71,18 @@ function NavigationHome() {
     };
 
     const handleProfile = () => {
-        history.push('/UserHomePage')
+        history.push('/ContractorHomePage')
     };
+     const handleContractorTransactionPage = () => {
+        history.push('/ContractorTransactionPage')
+     };
 
-    const handleUserMessagePage = () => {
-      history.push('/UserMessagesPage')
+    const handleContractorMessagePage = () => {
+        history.push('/ContractorMessagePage')
     };
 
     const handleUserNotificationPage = () => {
-      history.push('/UserNotificationPage')
+        history.push('/UserNotificationPage')
     };
 
     const handleSettingsPage = () => {
@@ -116,7 +119,7 @@ function NavigationHome() {
                     <div style={{ marginLeft: 'auto'}}>
                         <IconButton style={{color: '#03e3fc'}}>
                             <Badge>
-                                <MailIcon style={{color: '#03e3fc'}} onClick={handleUserMessagePage}/>
+                                <MailIcon style={{color: '#03e3fc'}} onClick={handleContractorMessagePage}/>
                             </Badge>
                         </IconButton>
                         <IconButton style={{color: '#03e3fc'}}>

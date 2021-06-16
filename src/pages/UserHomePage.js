@@ -9,8 +9,8 @@ class UserHomePage extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>
+            <div style= {{   marginLeft: '11rem', marginTop: '4rem'}}>
+                <h1 >
                     Userhomepage
                 </h1>
             </div>

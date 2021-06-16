@@ -1,15 +1,15 @@
 import React from 'react';
 import withRouter from "react-router-dom/es/withRouter";
 
-function UserNotificationPage() {
+function UserPlowPage() {
 
     return (
         <div style= {{   marginLeft: '11rem', marginTop: '4rem'}}>
             <h1>
-                User Messages Page :)
+                User Plow Page
             </h1>
         </div>
     );
 
 }
-export default withRouter(UserNotificationPage);
+export default withRouter(UserPlowPage);
