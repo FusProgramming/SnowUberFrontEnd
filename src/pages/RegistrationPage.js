@@ -19,14 +19,14 @@ function RegistrationPage() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [emailAddress, setEmailAddress] = useState("");
-    const [emailAddressTwo, setEmailAddressTwo] = useState("");
+    const [emailAddress2, setEmailAddress2] = useState("");
     const [userPassword, setPassword] = useState("");
-    const [userPasswordTwo, setPasswordTwo] = useState("");
+    const [userPassword2, setPassword2] = useState("");
 
     const onSubmitForm = async e => {
         e.preventDefault();
         try {
-            const body = { firstName, lastName, emailAddress, emailAddressTwo, userPassword, userPasswordTwo};
+            const body = { firstName, lastName, emailAddress, emailAddress2, userPassword, userPassword2};
             const response = await fetch("http://localhost:4100/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -34,7 +34,7 @@ function RegistrationPage() {
             });
             console.log(response);
         } catch (err) {
-            console.log(firstName, lastName, emailAddress, emailAddressTwo, userPassword, userPasswordTwo);
+            console.log(firstName, lastName, emailAddress, emailAddress2, userPassword, userPassword2);
             console.error(err.message);
         }
     };
@@ -118,8 +118,8 @@ function RegistrationPage() {
                                     label="Email address"
                                     margin="normal"
                                     variant= 'outlined'
-                                    value={emailAddressTwo}
-                                    onChange={e => setEmailAddressTwo(e.target.value)}
+                                    value={emailAddress2}
+                                    onChange={e => setEmailAddress2(e.target.value)}
                                     fullWidth
                                     required
                                     />
@@ -143,8 +143,8 @@ function RegistrationPage() {
                                 <TextField id="standard-name"
                                            label="Password"
                                            margin="normal"
-                                           value={userPasswordTwo}
-                                           onChange={e => setPasswordTwo(e.target.value)}
+                                           value={userPassword2}
+                                           onChange={e => setPassword2(e.target.value)}
                                            variant= 'outlined'
                                            fullWidth
                                            required
