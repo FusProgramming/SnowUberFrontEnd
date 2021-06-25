@@ -9,27 +9,24 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import ShovelLogo from "../assets/shovellogo.png";
-import EmailInput from "../input/EmailInput";
-import EmailInputTwo from "../input/EmailInputTwo";
-import NameInput from "../input/NameInput";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
-import PasswordInput from "../input/PasswordInput";
-import PasswordInputTwo from "../input/PasswordInputTwo";
-
-import LastNameInput from "../input/LastNameInput";
 import MrPlowHomer from "../assets/MrPlowHomer.jpg";
 import TextField from "@material-ui/core/TextField/TextField";
 
 
 function RegistrationPage() {
     const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [emailAddress, setEmailAddress] = useState("");
+    const [emailAddressTwo, setEmailAddressTwo] = useState("");
     const [userPassword, setPassword] = useState("");
+    const [userPasswordTwo, setPasswordTwo] = useState("");
+
     const onSubmitForm = async e => {
         e.preventDefault();
         try {
-            const body = { firstName, emailAddress, userPassword};
+            const body = { firstName, lastName, emailAddress, emailAddressTwo, userPassword, userPasswordTwo};
             const response = await fetch("http://localhost:4100/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -37,7 +34,7 @@ function RegistrationPage() {
             });
             console.log(response);
         } catch (err) {
-            console.log(firstName, emailAddress, userPassword);
+            console.log(firstName, lastName, emailAddress, emailAddressTwo, userPassword, userPasswordTwo);
             console.error(err.message);
         }
     };
@@ -60,7 +57,8 @@ function RegistrationPage() {
                 <Grid item xs={12} sm={4} md={5} elevation={1} square>
                     <div style={{
                         margin: 'auto',
-                        marginLeft: '14rem',
+                        marginLeft: '23rem',
+                        marginTop: '5rem'
                     }}>
                         <Avatar style={{
                             margin: 'auto',
@@ -89,7 +87,17 @@ function RegistrationPage() {
 
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <LastNameInput                          />
+
+                                <TextField id="standard-name"
+                                           label="Last Name"
+                                           value={lastName}
+                                           onChange={e => setLastName(e.target.value)}
+                                           margin="normal"
+                                           variant= 'outlined'
+                                           fullWidth
+                                           required
+                                />
+
                             </Grid>
                             <Grid item xs={12}>
 
@@ -102,12 +110,23 @@ function RegistrationPage() {
                                            fullWidth
                                            required
                                 />
-                                
+
                             </Grid>
                             <Grid item xs={12}>
-                                <EmailInputTwo                          />
+
+                                <TextField id="standard-name"
+                                    label="Email address"
+                                    margin="normal"
+                                    variant= 'outlined'
+                                    value={emailAddressTwo}
+                                    onChange={e => setEmailAddressTwo(e.target.value)}
+                                    fullWidth
+                                    required
+                                    />
+
                             </Grid>
                             <Grid item xs={12}>
+
                                     <TextField id="standard-name"
                                                label="Password"
                                                margin="normal"
@@ -117,15 +136,28 @@ function RegistrationPage() {
                                                fullWidth
                                                required
                                     />
+
                             </Grid>
                             <Grid item xs={12}>
-                                <PasswordInputTwo/>
+
+                                <TextField id="standard-name"
+                                           label="Password"
+                                           margin="normal"
+                                           value={userPasswordTwo}
+                                           onChange={e => setPasswordTwo(e.target.value)}
+                                           variant= 'outlined'
+                                           fullWidth
+                                           required
+                                />
+
                             </Grid>
                             <Grid item xs={12}>
+
                                 <FormControlLabel
                                     control={<Checkbox value="allowExtraEmails" color="primary"/>}
                                     label="I want to receive inspiration, marketing promotions and updates via email."
                                 />
+
                             </Grid>
                             <Button
                                 type="submit"
