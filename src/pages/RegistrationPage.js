@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Axios from 'axios';
 import {withRouter} from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,145 +10,62 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import ShovelLogo from "../assets/shovellogo.png";
 import EmailInput from "../input/EmailInput";
+import EmailInputTwo from "../input/EmailInputTwo";
 import NameInput from "../input/NameInput";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import PasswordInput from "../input/PasswordInput";
+import PasswordInputTwo from "../input/PasswordInputTwo";
+
 import LastNameInput from "../input/LastNameInput";
 import MrPlowHomer from "../assets/MrPlowHomer.jpg";
+import TextField from "@material-ui/core/TextField/TextField";
 
 
-
-
-class RegistrationPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-            users: [],
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            handleClick: ' ',
-            handleLoginOpen: false,
-        };
-        this.loadUsers = this.loadUsers.bind(this);
-        this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
-        this.handleLastNameChange = this.handleLastNameChange.bind(this);
-        this.handleEmailAddressChange = this.handleEmailAddressChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleUserSubmit = this.handleUserSubmit.bind(this);
-
-    }
-
-    handleUserHome = () => {
-        const { history } = this.props;
-        history.push('/UserHomePage')
+function RegistrationPage() {
+    const [firstName, setFirstName] = useState("");
+    const [emailAddress, setEmailAddress] = useState("");
+    const [userPassword, setPassword] = useState("");
+    const onSubmitForm = async e => {
+        e.preventDefault();
+        try {
+            const body = { firstName, emailAddress, userPassword};
+            const response = await fetch("http://localhost:4100/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+            console.log(response);
+        } catch (err) {
+            console.log(firstName, emailAddress, userPassword);
+            console.error(err.message);
+        }
     };
 
-    async componentDidMount() {
-        // Load all of the users as soon as this component mounts
-        await this.loadUsers()
-    }
+    return (
+        <div>
 
-    //handles first name entered
-    handleFirstNameChange(event) {
-        console.log("Change: " + event.target.value);
-        this.setState({firstName: event.target.value})
-    }
-
-    //handles last name entered
-    handleLastNameChange(event) {
-        console.log("Change: " + event.target.value);
-        this.setState({lastName: event.target.value})
-    }
-
-    //handles email address entered
-    handleEmailAddressChange(event) {
-        console.log("Change: " + event.target.value);
-        this.setState({emailAddress: event.target.value})
-    }
-
-    //handles password entered
-    handlePasswordChange(event) {
-        console.log("Change: " + event.target.value);
-        this.setState({password: event.target.value})
-    }
-
-
-    /**
-     * Reusable function that uses a GET request to load all users into a state.
-     */
-    async loadUsers() {
-
-        try {
-
-            const response = await Axios.get('/api/users');
-
-            const {data} = response;
-
-            this.setState({users: data});
-
-        } catch (error) {
-
-            console.error(error.message);
-        }
-    }
-
-    /**
-     * Called when the submit button is clicked.
-     */
-    async handleUserSubmit() {
-
-        const {  firstName, lastName, emailAddress, password } = this.state;
-
-        try {
-
-            // This is the JSON payload that will be delivered to the server in 'request.body'
-            const data = {
-                firstName: firstName,
-                lastName: lastName,
-                emailAddress: emailAddress,
-                password: password
-            };
-            console.log(data);
-
-            // We are now doing a POST request because we are storing a new user plus switching to the login page for login
-            await Axios.post('/api/users', data);
-        }
-        catch (error) {
-
-            console.error(error.message);
-        }
-
-        // Reload the users straight from the server
-        await this.loadUsers();
-    }
-
-
-    render() {
-        const {firstName, lastName, emailAddress, password} = this.state;
-
-        return (
-            <div>
-
-                <Grid container component="main" maxWidth="xs">
-                    <CssBaseline />
-                    <Grid item xs={false} sm={4} md={6} >
-                        <img style={{   backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                        marginTop: '5rem',
-                                        marginLeft: '6rem',
-                                        height: '75vh'}}
-                                        src={MrPlowHomer} alt="Photo"/>
-                    </Grid>
-                    <Grid item xs={12} sm={4} md={5} elevation={1} square>
-                    <div style={{   margin: 'auto',
-                                    marginLeft: '14rem',
-                                    marginTop: '5rem'}}>
-                        <Avatar style={{    margin: 'auto',
-                                            marginLeft: '1rem'}}>
+            <Grid container component="main" maxWidth="xs">
+                <CssBaseline/>
+                <Grid item xs={false} sm={4} md={6}>
+                    <img style={{
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        marginTop: '5rem',
+                        marginLeft: '6rem',
+                        height: '75vh'
+                    }}
+                         src={MrPlowHomer} alt="Photo"/>
+                </Grid>
+                <Grid item xs={12} sm={4} md={5} elevation={1} square>
+                    <div style={{
+                        margin: 'auto',
+                        marginLeft: '14rem',
+                    }}>
+                        <Avatar style={{
+                            margin: 'auto',
+                            marginLeft: '1rem'
+                        }}>
                             <img style={{blockSize: '75%'}}
                                  src={ShovelLogo} alt="Photo"/>
                         </Avatar>
@@ -156,27 +73,57 @@ class RegistrationPage extends React.Component {
                             Sign up
                         </Typography>
                     </div>
-                    <form noValidate>
+                    <form noValidate onSubmit={onSubmitForm}>
                         <Grid container spacing={0}>
                             <Grid item xs={12} sm={6}>
-                                <NameInput firstName={firstName}
-                                           onChange={this.handleFirstNameChange}/>
+
+                                <TextField id="standard-name"
+                                           label="First Name"
+                                           margin="normal"
+                                           value={firstName}
+                                           onChange={e => setFirstName(e.target.value)}
+                                           variant= 'outlined'
+                                           fullWidth
+                                           required
+                                />
+
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <LastNameInput lastName={lastName}
-                                               onChange={this.handleLastNameChange}/>
+                                <LastNameInput                          />
                             </Grid>
                             <Grid item xs={12}>
-                                <EmailInput emailAddress={emailAddress}
-                                            onChange={this.handleEmailAddressChange}/>
+
+                                <TextField id="standard-name"
+                                           label="Email address"
+                                           margin="normal"
+                                           value={emailAddress}
+                                           onChange={e => setEmailAddress(e.target.value)}
+                                           variant= 'outlined'
+                                           fullWidth
+                                           required
+                                />
+                                
                             </Grid>
                             <Grid item xs={12}>
-                                <PasswordInput password={password}
-                                               onChange={this.handlePasswordChange}/>
+                                <EmailInputTwo                          />
+                            </Grid>
+                            <Grid item xs={12}>
+                                    <TextField id="standard-name"
+                                               label="Password"
+                                               margin="normal"
+                                               value={userPassword}
+                                               onChange={e => setPassword(e.target.value)}
+                                               variant= 'outlined'
+                                               fullWidth
+                                               required
+                                    />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <PasswordInputTwo/>
                             </Grid>
                             <Grid item xs={12}>
                                 <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
+                                    control={<Checkbox value="allowExtraEmails" color="primary"/>}
                                     label="I want to receive inspiration, marketing promotions and updates via email."
                                 />
                             </Grid>
@@ -185,7 +132,6 @@ class RegistrationPage extends React.Component {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                onClick={this.handleUserHome}
                             >
                                 Sign Up
                             </Button>
@@ -195,17 +141,15 @@ class RegistrationPage extends React.Component {
                                         Already have an account? Sign in
                                     </Link>
                                 </Grid>
-                        </Grid>
+                            </Grid>
                         </Grid>
                     </form>
                 </Grid>
-                </Grid>
-            </div>
+            </Grid>
+        </div>
 
-        );
+    );
 
-
-    }
 }
 
 export default withRouter(RegistrationPage);
