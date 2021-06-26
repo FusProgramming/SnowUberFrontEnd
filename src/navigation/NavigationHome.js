@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { withRouter } from 'react-router-dom'
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -39,6 +39,8 @@ function NavigationHome() {
     const handleRegister = () => {
         history.push('/RegistrationPage')
     };
+
+
 
     return (
             <div style={{

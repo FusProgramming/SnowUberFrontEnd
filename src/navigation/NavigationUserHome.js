@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { withRouter } from 'react-router-dom'
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -98,6 +98,21 @@ function NavigationHome() {
         history.push('/HomePage')
     };
 
+    const getProfile = async () => {
+        try {
+            const response = await fetch("http://localhost:5000/navigation", {
+                method: "POST",
+                headers: { }
+            });
+        } catch {
+            console.error('1');
+        }
+    };
+
+    useEffect(() => {
+        getProfile();
+    }, []);
+
     return (
         <div style={{ display: 'flex',
             width: '100%'}}>
@@ -113,7 +128,11 @@ function NavigationHome() {
                                  src={SnowLogo} alt="Photo"/>
                         </div>
                     </div>
-                    <div style={{ marginLeft: 'auto'}}>
+                    <div style={{ marginLeft: 'auto', display: 'flex'}}>
+                        <div>
+                            <h3> Welcome </h3>
+                        </div>
+                        <div style={{ marginTop: '.5rem'}}>
                         <IconButton style={{color: '#03e3fc'}}>
                             <Badge>
                                 <MailIcon style={{color: '#03e3fc'}} onClick={handleUserMessagePage}/>
@@ -156,6 +175,7 @@ function NavigationHome() {
                                 </MenuItem>
                             </Menu>
                         </IconButton>
+                    </div>
                     </div>
                 </Toolbar>
 

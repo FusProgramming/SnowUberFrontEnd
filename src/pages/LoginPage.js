@@ -19,7 +19,7 @@ import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 
 
 
-function LoginPage() {
+function LoginPage(setAuth) {
 
     const [emailAddress, setEmailAddress] = useState("");
     const [userPassword, setPassword] = useState("");
@@ -33,6 +33,14 @@ function LoginPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             });
+            const parseResponse = await response.json();
+
+            if(parseResponse.userToken) {
+                localStorage.setItem("Token", parseResponse.userToken);
+                setAuth(true);
+            } else {
+                setAuth(false);
+            }
             console.log(response);
         } catch (err) {
             console.error(err.message);
@@ -44,15 +52,11 @@ function LoginPage() {
 
                 <Grid container component="main" maxWidth="xs">
                     <CssBaseline/>
-                    <Grid item xs={false} sm={4} md={6}>
-                        <img style={{
-                            backgroundSize: 'cover',
+                    <Grid item xs={false} sm={4} md={6} >
+                        <img style={{   backgroundSize: 'cover',
                             backgroundPosition: 'center',
-                            marginTop: '5rem',
-                            marginLeft: '6rem',
-                            height: '75vh'
-                        }}
-                             src={MrPlowHomer} alt="Photo"/>
+                            height: '100vh'}}
+                             src={MrPlow} alt="Photo"/>
                     </Grid>
                     <Grid item xs={12} sm={4} md={5} elevation={1} square>
                         <div style={{
@@ -116,10 +120,15 @@ function LoginPage() {
                                 >
                                     Login
                                 </Button>
-                                <Grid container justify="flex-end">
+                                <Grid container>
+                                    <Grid item xs>
+                                        <Link href="#" variant="body2">
+                                            Forgot password?
+                                        </Link>
+                                    </Grid>
                                     <Grid item>
-                                        <Link href="/LoginPage" variant="body2">
-                                            Already have an account? Sign in
+                                        <Link href="#" variant="body2">
+                                            {"Don't have an account? Sign Up"}
                                         </Link>
                                     </Grid>
                                 </Grid>
