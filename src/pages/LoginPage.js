@@ -1,5 +1,5 @@
-import React from 'react';
-import withRouter from "react-router-dom/es/withRouter";
+import React, {useState} from 'react';
+import {withRouter} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import MrPlow from "../assets/Mr.Plow.png";
@@ -12,140 +12,124 @@ import EmailInput from "../input/EmailInput";
 import PasswordInput from "../input/PasswordInput";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
+import TextField from "@material-ui/core/TextField/TextField";
+import MrPlowHomer from "../assets/MrPlowHomer.jpg";
+import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 
 
 
+function LoginPage() {
 
+    const [emailAddress, setEmailAddress] = useState("");
+    const [userPassword, setPassword] = useState("");
 
-class LoginPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            userName: " ",
-            password: " ",
-            handleClick: ' ',
-            isAuthenticated: false
-        };
-
-        this.handleEmailAddressChange = this.handleEmailAddressChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleRegisterOpen = this.handleRegisterOpen.bind(this);
-        this.handleHomeOpen = this.handleHomeOpen.bind(this);
-        this.handleAdminHome= this.handleAdminHome.bind(this);
-        this.handleUserHome = this.handleUserHome.bind(this);
-    }
-
-
-    /**
-     * Called when the 'Home' button is pressed.
-     * Navigates to the {@link HomePage}.
-     */
-    handleHomeOpen = () => {
-        const { history } = this.props;
-        history.push('/HomePage')
+    const onSubmitForm = async e => {
+        e.preventDefault();
+        try {
+            const body = { emailAddress, userPassword};
+            const response = await fetch("http://localhost:4100/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+            console.log(response);
+        } catch (err) {
+            console.error(err.message);
+        }
     };
-
-    /**
-     * Called when the 'Register' button is pressed.
-     * Navigates to the {@link RegisterPage}.
-     */
-    handleRegisterOpen = () => {
-        const { history } = this.props;
-        history.push('/RegisterPage')
-    };
-    handleAdminHome = () => {
-        const { history } = this.props;
-        history.push('/AdminHomePage')
-    };
-
-    handleUserHome = () => {
-        const { history } = this.props;
-        history.push('/UserHomePage')
-    };
-    //handles email address entered
-    handleEmailAddressChange(event) {
-        console.log("Change: " + event.target.value);
-        this.setState({emailAddress: event.target.value})
-    }
-
-    //handles password address entered
-    handlePasswordChange(event) {
-        console.log("Change: " + event.target.value);
-        this.setState({password: event.target.value})
-    }
-    render() {
-
-        const {emailAddress} = this.state;
-        const {password} = this.state;
-
 
         return (
             <div>
-                <Grid container component="main">
-                    <CssBaseline />
-                    <Grid item xs={false} sm={4} md={6} >
-                        <img style={{   backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                        height: '100vh'}}
-                                        src={MrPlow} alt="Photo"/>
-                    </Grid>
-                    <Grid item xs={12} sm={7} md={5} elevation={1} square>
-                    <div style={{   marginTop: '9rem',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',}}>
-                        <Avatar>
-                            <img style={{blockSize: '75%'}}
-                                 src={ShovelLogo} alt="Photo"/>
-                        </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
-                    </div>
-                    <div>
-                       <form>
-                           <Grid container>
-                               <Grid item xs={12}>
-                                       <EmailInput emailAddress={emailAddress}
-                                                   onChange={this.handleEmailAddressChange}
-                                       />
-                               </Grid>
-                               <Grid item xs={12}>
-                                       <PasswordInput password={password}
-                                                      onChange={this.handlePasswordChange}
-                                       />
-                               </Grid>
-                               <Grid container>
-                                   <Grid item xs>
-                                       <Link href="#" variant="body2">
-                                           Forgot password?
-                                       </Link>
-                                   </Grid>
-                                   <Grid item>
-                                       <Link href="#" variant="body2">
-                                           {"Don't have an account? Sign Up"}
-                                       </Link>
-                                   </Grid>
-                               </Grid>
-                               <Grid item xs={9}>
-                                   <Button style={{     marginTop: '1rem',
-                                                        marginLeft: '4rem' }}
-                                           onClick={this.handleUserHome}
-                                           label="Login" primary={true}
-                                           fullWidth
-                                           variant = 'contained'
-                                           color = 'primary'>Login</Button>
-                               </Grid>
-                           </Grid>
-                       </form>
-                    </div>
 
+                <Grid container component="main" maxWidth="xs">
+                    <CssBaseline/>
+                    <Grid item xs={false} sm={4} md={6}>
+                        <img style={{
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            marginTop: '5rem',
+                            marginLeft: '6rem',
+                            height: '75vh'
+                        }}
+                             src={MrPlowHomer} alt="Photo"/>
+                    </Grid>
+                    <Grid item xs={12} sm={4} md={5} elevation={1} square>
+                        <div style={{
+                            margin: 'auto',
+                            marginLeft: '23rem',
+                            marginTop: '5rem'
+                        }}>
+                            <Avatar style={{
+                                margin: 'auto',
+                                marginLeft: '1rem'
+                            }}>
+                                <img style={{blockSize: '75%'}}
+                                     src={ShovelLogo} alt="Photo"/>
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Sign up
+                            </Typography>
+                        </div>
+                        <form noValidate onSubmit={onSubmitForm}>
+                            <Grid container spacing={0}>
+                                <Grid item xs={12}>
+
+                                    <TextField id="standard-name"
+                                               label="Email address"
+                                               margin="normal"
+                                               value={emailAddress}
+                                               onChange={e => setEmailAddress(e.target.value)}
+                                               variant= 'outlined'
+                                               fullWidth
+                                               required
+                                    />
+
+                                </Grid>
+                                <Grid item xs={12}>
+
+                                    <TextField id="standard-name"
+                                               label="Password"
+                                               margin="normal"
+                                               value={userPassword}
+                                               onChange={e => setPassword(e.target.value)}
+                                               variant= 'outlined'
+                                               fullWidth
+                                               required
+                                    />
+
+                                </Grid>
+
+                                <Grid item xs={12}>
+
+                                    <FormControlLabel
+                                        control={<Checkbox value="allowExtraEmails" color="primary"/>}
+                                        label="Remember Password"
+                                    />
+
+                                </Grid>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    color="primary"
+                                >
+                                    Login
+                                </Button>
+                                <Grid container justify="flex-end">
+                                    <Grid item>
+                                        <Link href="/LoginPage" variant="body2">
+                                            Already have an account? Sign in
+                                        </Link>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </form>
                     </Grid>
                 </Grid>
             </div>
 
 
         );
-    }
 }
 export default withRouter(LoginPage);
