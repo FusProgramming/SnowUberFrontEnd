@@ -15,7 +15,7 @@ import MrPlowHomer from "../assets/MrPlowHomer.jpg";
 import TextField from "@material-ui/core/TextField/TextField";
 
 
-function RegistrationPage() {
+function RegistrationPage( { setAuth } ) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [emailAddress, setEmailAddress] = useState("");
@@ -26,15 +26,24 @@ function RegistrationPage() {
     const onSubmitForm = async e => {
         e.preventDefault();
         try {
-            const body = { firstName, lastName, emailAddress, emailAddress2, userPassword, userPassword2};
+            const body = {firstName, lastName, emailAddress, emailAddress2, userPassword, userPassword2};
             const response = await fetch("http://localhost:4100/register", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {"Content-type": "application/json"},
                 body: JSON.stringify(body)
             });
             console.log(response);
+
+            const parseResponse = await response.json();
+            console.log(JSON.stringify(parseResponse));
+
+            if(parseResponse.jwtToken) {
+                localStorage.setItem("token", parseResponse.jwtToken);
+                setAuth(true);
+            } else {
+                setAuth(false);
+            }
         } catch (err) {
-            console.log(firstName, lastName, emailAddress, emailAddress2, userPassword, userPassword2);
             console.error(err.message);
         }
     };

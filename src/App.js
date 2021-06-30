@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Axios from 'axios';
 import NavigationHome from './navigation/NavigationHome';
 import LoginPage from "./pages/LoginPage"
@@ -22,8 +22,15 @@ import ContractorHomePage from "./pages/ContractorHomePage";
 import ContractorMessagePage from "./pages/ContractorMessagePage";
 import ContractorTransactionsPage from "./pages/ContractorTransactionsPage";
 import NavigationContractorHome from "./navigation/NavigationContractorHome";
+import Redirect from "react-router-dom/es/Redirect";
 
 function App() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
+    const setAuth = boolean => {
+        setIsAuthenticated(boolean);
+    };
     return (
         <Router>
           <div>
@@ -64,9 +71,7 @@ function App() {
                     <NavigationUserHome/>
                     <UserHomePage/>
                 </Route>
-                <Route path="/RegistrationPage">
-                    <RegistrationPage/>
-                </Route>
+                <Route path="/RegistrationPage" render={props => !isAuthenticated ? ( <RegistrationPage {...props} setAuth={setAuth} /> ) : ( <Redirect to="/UserHomePage"/> ) }/>
                 <Route path="/ForgotPasswordPage">
                     <ForgotPasswordPage/>
                 </Route>

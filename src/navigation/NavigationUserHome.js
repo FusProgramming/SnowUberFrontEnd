@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { withRouter } from 'react-router-dom'
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -34,10 +34,30 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function NavigationHome() {
+function NavigationHome({setAuth}) {
 
     const classes = useStyles();
     const history = useHistory();
+    const [firstName, setName] = useState("");
+    const getProfile = async () => {
+        try {
+            const res = await fetch("http://localhost:4100/UserHomePage", {
+                method: "POST",
+                headers: { jwtToken: localStorage.token }
+            });
+
+            const parseData = await res.json();
+            console.log("FIrstName" + firstName);
+            console.log(parseData);
+            setName(parseData.firstName);
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
+    useEffect(() => {
+        getProfile();
+    }, []);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const drawBarList = [
         {
@@ -94,24 +114,11 @@ function NavigationHome() {
         history.push('/UserPlowPage')
     };
 
-    const handleLogOut = () => {
+    const handleLogOut = (event) => {
+        event.preventDefault();
+        localStorage.removeItem("token");
         history.push('/HomePage')
     };
-
-    const getProfile = async () => {
-        try {
-            const response = await fetch("http://localhost:5000/navigation", {
-                method: "POST",
-                headers: { }
-            });
-        } catch {
-            console.error('1');
-        }
-    };
-
-    useEffect(() => {
-        getProfile();
-    }, []);
 
     return (
         <div style={{ display: 'flex',
@@ -130,7 +137,7 @@ function NavigationHome() {
                     </div>
                     <div style={{ marginLeft: 'auto', display: 'flex'}}>
                         <div>
-                            <h3> Welcome </h3>
+                            <h3> Welcome, {firstName} </h3>
                         </div>
                         <div style={{ marginTop: '.5rem'}}>
                         <IconButton style={{color: '#03e3fc'}}>

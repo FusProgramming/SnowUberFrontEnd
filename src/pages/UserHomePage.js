@@ -1,20 +1,36 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import withRouter from "react-router-dom/es/withRouter";
 
-class UserHomePage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+function UserHomePage() {
+    const [firstName, setName] = useState("");
+    const getProfile = async () => {
+        try {
+            const res = await fetch("http://localhost:4100/UserHomePage", {
+                method: "POST",
+                headers: { jwtToken: localStorage.token }
+            });
 
-    render() {
+            const parseData = await res.json();
+            console.log("FIrstName" + firstName);
+            console.log(parseData);
+            setName(parseData.firstName);
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
+    useEffect(() => {
+        getProfile();
+    }, []);
+
+
+
         return (
             <div style= {{   marginLeft: '11rem', marginTop: '4rem'}}>
                 <h1 >
-                    Userhomepage
+                     FirstName: {firstName}
                 </h1>
             </div>
         );
-    }
 }
 export default withRouter(UserHomePage);
