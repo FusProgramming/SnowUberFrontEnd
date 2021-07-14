@@ -27,10 +27,30 @@ import Redirect from "react-router-dom/es/Redirect";
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+    const checkAuthenticated = async () => {
+      try {
+          const response = await fetch("http://localhost:4100/authentication/verify", {
+              method: "POST",
+              headers: { jwtToken: localStorage.token }
+          });
+
+          const parseResponse = await response.json();
+          parseResponse === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+
+      } catch (error) {
+          console.error(error.message);
+      }
+    };
 
     const setAuth = boolean => {
         setIsAuthenticated(boolean);
     };
+
+
+    useEffect(() => {
+        checkAuthenticated();
+    }, []);
+
     return (
         <Router>
           <div>

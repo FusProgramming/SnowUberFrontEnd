@@ -4,8 +4,6 @@ import withRouter from "react-router-dom/es/withRouter";
 function UserHomePage() {
 
 
-
-
         return (
             <div style= {{   marginLeft: '11rem', marginTop: '4rem'}}>
                 <h1 >
