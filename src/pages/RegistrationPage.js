@@ -26,16 +26,13 @@ function RegistrationPage( { setAuth } ) {
     const onSubmitForm = async e => {
         e.preventDefault();
         try {
-            const body = {firstName, lastName, emailAddress, emailAddress2, userPassword, userPassword2};
-            const response = await fetch("http://localhost:4100/register", {
+            const body = {firstName, lastName, emailAddress,emailAddress2,userPassword,userPassword2};
+            const response = await fetch("http://localhost:4100/authentication/register", {
                 method: "POST",
-                headers: {"Content-type": "application/json"},
+                headers: { "Content-type": "application/json"},
                 body: JSON.stringify(body)
             });
-            console.log(response);
-
             const parseResponse = await response.json();
-            console.log(JSON.stringify(parseResponse));
 
             if(parseResponse.jwtToken) {
                 localStorage.setItem("token", parseResponse.jwtToken);
@@ -43,9 +40,13 @@ function RegistrationPage( { setAuth } ) {
             } else {
                 setAuth(false);
             }
-        } catch (err) {
-            console.error(err.message);
+
+        } catch (error) {
+            localStorage.clear();
+            console.error(error.message);
         }
+
+
     };
 
     return (

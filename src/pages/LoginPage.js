@@ -24,28 +24,6 @@ function LoginPage(setAuth) {
     const [emailAddress, setEmailAddress] = useState("");
     const [userPassword, setPassword] = useState("");
 
-    const onSubmitForm = async e => {
-        e.preventDefault();
-        try {
-            const body = { emailAddress, userPassword};
-            const response = await fetch("http://localhost:4100/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body)
-            });
-            const parseResponse = await response.json();
-
-            if(parseResponse.userToken) {
-                localStorage.setItem("Token", parseResponse.userToken);
-                setAuth(true);
-            } else {
-                setAuth(false);
-            }
-            console.log(response);
-        } catch (err) {
-            console.error(err.message);
-        }
-    };
 
         return (
             <div>
@@ -75,7 +53,7 @@ function LoginPage(setAuth) {
                                 Sign up
                             </Typography>
                         </div>
-                        <form noValidate onSubmit={onSubmitForm}>
+                        <form noValidate>
                             <Grid container spacing={0}>
                                 <Grid item xs={12}>
 
